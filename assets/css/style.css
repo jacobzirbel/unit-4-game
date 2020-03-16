@@ -1,9 +1,15 @@
 .fighters {
-  display: flex;
-  flex-flow: row nowrap;
+	display: flex;
+	flex-flow: row nowrap;
 }
 .fighter {
-  height: 150px;
-  width: 150px;
-  border: 1px solid black;
+	height: 150px;
+	width: 150px;
+	border: 1px solid black;
+}
+.yourFighter {
+	background-color: yellow;
+}
+.enemyFighter {
+	background-color: black;
 }
