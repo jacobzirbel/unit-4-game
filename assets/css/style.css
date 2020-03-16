@@ -10,7 +10,7 @@ body {
 	width: 150px;
 	border: 1px solid black;
 }
-.yourFighter {
+.characterFighter {
 	background-color: yellow;
 	align-self: flex-start;
 }
@@ -23,7 +23,7 @@ body {
 	display: flex;
 	flex-flow: row nowrap;
 }
-.youWrapper,
+.characterWrapper,
 .enemyWrapper {
 	height: 400px;
 	width: 50%;

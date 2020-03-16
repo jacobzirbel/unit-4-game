@@ -1,6 +1,6 @@
 game = {
 	DOMElements: {
-		youWrapper: $(".youWrapper"),
+		characterWrapper: $(".characterWrapper"),
 		enemyWrapper: $(".enemyWrapper"),
 		fighters: $(".fighters"),
 		fighter1: $("#fighter1"),
@@ -8,52 +8,38 @@ game = {
 		fighter3: $("#fighter3"),
 		fighter4: $("#fighter4")
 	},
-	currentCharacter: {},
-	currentEnemy: {},
+	currentCharacter: "",
+	currentEnemy: "",
 	fighters: [
 		{ name: "fighter1", HP: 10, attack: 4, counter: 4 },
 		{ name: "fighter2", HP: 10, attack: 4, counter: 4 },
 		{ name: "fighter3", HP: 10, attack: 4, counter: 4 },
 		{ name: "fighter4", HP: 10, attack: 4, counter: 4 }
 	],
+	pickNum: 0,
 	testAlert: () => alert("hello"),
-	selectFighter(f) {
-		f.hide();
-		this.DOMElements.youWrapper.append(f);
-		f.show();
-		this.currentCharacter = this.fighters.find(e => f.attr("id") === e.name);
-		this.currentCharacter.increaseAttack = function() {
-			this.yourAttack += this.attack;
-		};
+	select(f, type) {
+		this.DOMElements[type.toLowerCase() + "Wrapper"].append(f);
+		this["current" + type] = this.fighters.find(e => f.attr("id") === e.name);
 		this.fighters = this.fighters.filter(e => f.attr("id") !== e.name);
-		console.log(this.fighters);
 	},
-	selectEnemy(f) {
-		f.hide();
-		this.DOMElements.enemyWrapper.append(f);
-		f.show();
-		this.currentEnemy = this.fighters.find(e => f.attr("id") === e.name);
-		this.fighters = this.fighters.filter(e => f.attr("id") !== e.name);
-		console.log(this.fighters);
-	},
-	pickCharacter() {
-		$(".option").on("click", function() {
-			$(".option").off();
-			$(this).attr("class", "yourFighter fighter");
-			console.log(this);
-			game.selectFighter($(this));
-			game.pickEnemy();
-		});
-	},
-	pickEnemy() {
-		$(".option").on("click", function() {
-			$(".option").off();
-			$(this).attr("class", "enemyFighter fighter");
-			console.log(this);
-			game.selectEnemy($(this));
-		});
+	pick() {
+		if ([0, 1, 2, 3].includes(this.pickNum)) {
+			let type = this.pickNum === 0 ? "Character" : "Enemy";
+			console.log(type);
+			$(".option").on("click", function() {
+				$(".option").off();
+				$(this).attr("class", `${type.toLowerCase()}Fighter fighter`);
+				game.select($(this), type);
+				game.pickNum++;
+				if (!game.currentEnemy) {
+					game.pick();
+				}
+			});
+		}
 	}
 };
+
 $(document).ready(() => {
-	game.pickCharacter();
+	game.pick();
 });
