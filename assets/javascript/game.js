@@ -23,26 +23,41 @@ game = {
 		{ name: "fighter4", HP: 40, attackPower: 4, counter: 4 }
 	],
 	pickNum: 0,
+	spellNum: 0,
 	showHealth() {
+		console.log(this);
 		this.DOMElements.characterHealth.text(this.currentCharacter.HP);
 		this.DOMElements.enemyHealth.text(this.currentEnemy.HP);
 	},
 	animateSpell() {
 		let spell = this.DOMElements.spell;
 		this.DOMElements[this.currentCharacter.name].append(spell);
-		spell.attr("id", "characterSpell");
-		spell.animate({ right: "100px", opacity: "1" }, "normal", () =>
-			alert("hell")
-		);
+		spell.attr("id", "spell");
+		spell.animate({ right: "100px", opacity: "1" }, "normal", () => {
+			this.currentEnemy.HP -= this.currentCharacter.attack();
+			this.showHealth();
+			setTimeout(() => {
+				this.animateCounter();
+				this.DOMElements.attackButton.prop("disabled", false);
+			}, 1000);
+		});
+		spell.animate({ opacity: "0" }, "normal");
+	},
+	animateCounter() {
+		let spell = this.DOMElements.spell;
+		spell.animate({ left: "100px", opacity: "1" }, "normal", () => {
+			this.currentCharacter.HP -= this.currentEnemy.attackPower;
+			this.showHealth();
+			spell.animate({ opacity: "0" }, "normal");
+			this.fight();
+		});
 	},
 	fight() {
 		this.showHealth();
-
 		this.DOMElements.characterWrapper.append(this.DOMElements.attackButton);
-		this.DOMElements.attackButton.on("click", () => {
+		this.DOMElements.attackButton.one("click", () => {
+			this.DOMElements.attackButton.prop("disabled", true);
 			this.animateSpell();
-			this.currentEnemy.HP -= this.currentCharacter.attack();
-			this.showHealth();
 		});
 	},
 	select(f, type) {
