@@ -20,5 +20,13 @@ game = {
 		f.hide();
 		this.DOMElements.youWrapper.append(f);
 		f.show();
+	},
+	run() {
+		$(".fighter").on("click", function() {
+			game.moveFighter($(this));
+		});
 	}
 };
+$(document).ready(() => {
+	game.run();
+});
