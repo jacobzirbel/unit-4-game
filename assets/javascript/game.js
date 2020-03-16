@@ -22,6 +22,9 @@ game = {
 		this.DOMElements.youWrapper.append(f);
 		f.show();
 		this.currentCharacter = this.fighters.find(e => f.attr("id") === e.name);
+		this.currentCharacter.increaseAttack = function() {
+			this.yourAttack += this.attack;
+		};
 		this.fighters = this.fighters.filter(e => f.attr("id") !== e.name);
 		console.log(this.fighters);
 	},

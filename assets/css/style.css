@@ -1,3 +1,6 @@
+body {
+	width: 100%;
+}
 .fighters {
 	display: flex;
 	flex-flow: row nowrap;
@@ -9,7 +12,23 @@
 }
 .yourFighter {
 	background-color: yellow;
+	align-self: flex-start;
 }
 .enemyFighter {
 	background-color: black;
+	align-self: flex-end;
+}
+.field {
+	width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+}
+.youWrapper,
+.enemyWrapper {
+	height: 400px;
+	width: 50%;
+	border: 1px solid black;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 }
