@@ -32,3 +32,14 @@ body {
 	flex-direction: column;
 	justify-content: space-around;
 }
+button {
+	height: 40px;
+	width: 50px;
+}
+#characterSpell {
+	position: absolute;
+	height: 30px;
+	width: 30px;
+	background-color: green;
+	opacity: 0.25;
+}
