@@ -17,11 +17,16 @@ game = {
 		{ name: "fighter4", HP: 10, attack: 4, counter: 4 }
 	],
 	pickNum: 0,
-	testAlert: () => alert("hello"),
 	select(f, type) {
 		this.DOMElements[type.toLowerCase() + "Wrapper"].append(f);
 		this["current" + type] = this.fighters.find(e => f.attr("id") === e.name);
 		this.fighters = this.fighters.filter(e => f.attr("id") !== e.name);
+		if (type === "Character") {
+			this.currentCharacter.characterAttack = this.currentCharacter.attack;
+			this.currentCharacter.increaseAttack = function() {
+				this.characterAttack += this.attack;
+			};
+		}
 	},
 	pick() {
 		if ([0, 1, 2, 3].includes(this.pickNum)) {
@@ -36,6 +41,8 @@ game = {
 					game.pick();
 				}
 			});
+		} else {
+			//winner?
 		}
 	}
 };
