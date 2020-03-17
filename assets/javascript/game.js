@@ -20,14 +20,28 @@ game = {
 		{ name: "fighter4", HP: 40, attackPower: 4 }
 	],
 	pickNum: 0,
-	spellNum: 0,
+	reset() {
+		location.reload();
+	},
+	lose() {
+		//	alert("loser");
+		this.reset();
+	},
+	win() {
+		//	alert("winner");
+		this.reset();
+	},
 	showHealth() {
 		if (this.currentCharacter.HP < 1) {
 			this.currentCharacter.HP = 0;
+
+			this.DOMElements.characterHealth.text("You Lose");
+
 			this.lose();
 		}
 		if (this.currentEnemy.HP < 1) {
 			this.currentEnemy.HP = 0;
+			this.DOMElements.enemyHealth.text("Pick Next Enemy");
 			this.DOMElements[this.currentEnemy.name].remove();
 			this.currentEnemy = "";
 			this.pick();
@@ -45,7 +59,7 @@ game = {
 			if (this.currentEnemy) {
 				setTimeout(() => {
 					this.animateCounter();
-				}, 1000);
+				}, 100);
 			}
 		});
 		spell.animate({ opacity: "0" }, "normal");
@@ -95,6 +109,9 @@ game = {
 	},
 	pick() {
 		let type = this.pickNum === 0 ? "Character" : "Enemy";
+		if (type === "Enemy" && this.fighters.length === 0) {
+			this.win();
+		}
 		$(".option").on("click", function() {
 			$(".option").off();
 			$(this).attr("class", `${type.toLowerCase()}Fighter fighter`);
