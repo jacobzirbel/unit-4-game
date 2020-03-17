@@ -11,16 +11,15 @@ game = {
 		enemyHealth: $("<p>").attr("id", "enemyHealth"),
 		attackButton: $("<button>")
 			.attr("id", "attackButton")
-			.text("attack"),
-		spell: $("<div>")
+			.text("attack")
 	},
 	currentCharacter: "",
 	currentEnemy: "",
 	fighters: [
-		{ name: "fighter1", HP: 10, attackPower: 4, counter: 4 },
-		{ name: "fighter2", HP: 20, attackPower: 4, counter: 4 },
-		{ name: "fighter3", HP: 30, attackPower: 4, counter: 4 },
-		{ name: "fighter4", HP: 40, attackPower: 4, counter: 4 }
+		{ name: "fighter1", HP: 10, attackPower: 4 },
+		{ name: "fighter2", HP: 20, attackPower: 4 },
+		{ name: "fighter3", HP: 30, attackPower: 4 },
+		{ name: "fighter4", HP: 40, attackPower: 4 }
 	],
 	pickNum: 0,
 	spellNum: 0,
@@ -30,7 +29,7 @@ game = {
 		this.DOMElements.enemyHealth.text(this.currentEnemy.HP);
 	},
 	animateSpell() {
-		let spell = this.DOMElements.spell;
+		let spell = $("<div>");
 		this.DOMElements[this.currentCharacter.name].append(spell);
 		spell.attr("id", "spell");
 		spell.animate({ right: "100px", opacity: "1" }, "normal", () => {
@@ -44,7 +43,9 @@ game = {
 		spell.animate({ opacity: "0" }, "normal");
 	},
 	animateCounter() {
-		let spell = this.DOMElements.spell;
+		let spell = $("<div>");
+		this.DOMElements[this.currentEnemy.name].append(spell);
+		spell.attr("id", "spell");
 		spell.animate({ left: "100px", opacity: "1" }, "normal", () => {
 			this.currentCharacter.HP -= this.currentEnemy.attackPower;
 			this.showHealth();
