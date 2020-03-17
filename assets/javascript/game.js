@@ -9,22 +9,29 @@ game = {
 		fighter4: $("#fighter4"),
 		characterHealth: $("<p>").attr("id", "characterHealth"),
 		enemyHealth: $("<p>").attr("id", "enemyHealth"),
-		attackButton: $("<button>")
-			.attr("id", "attackButton")
-			.text("attack")
+		attackButton: $("#attackButton")
 	},
 	currentCharacter: "",
 	currentEnemy: "",
 	fighters: [
 		{ name: "fighter1", HP: 10, attackPower: 4 },
-		{ name: "fighter2", HP: 20, attackPower: 4 },
+		{ name: "fighter2", HP: 20, attackPower: 19 },
 		{ name: "fighter3", HP: 30, attackPower: 4 },
 		{ name: "fighter4", HP: 40, attackPower: 4 }
 	],
 	pickNum: 0,
 	spellNum: 0,
 	showHealth() {
-		console.log(this);
+		if (this.currentCharacter.HP < 1) {
+			this.currentCharacter.HP = 0;
+			this.lose();
+		}
+		if (this.currentEnemy.HP < 1) {
+			this.currentEnemy.HP = 0;
+			this.DOMElements[this.currentEnemy.name].remove();
+			this.currentEnemy = "";
+			this.pick();
+		}
 		this.DOMElements.characterHealth.text(this.currentCharacter.HP);
 		this.DOMElements.enemyHealth.text(this.currentEnemy.HP);
 	},
@@ -35,10 +42,11 @@ game = {
 		spell.animate({ right: "100px", opacity: "1" }, "normal", () => {
 			this.currentEnemy.HP -= this.currentCharacter.attack();
 			this.showHealth();
-			setTimeout(() => {
-				this.animateCounter();
-				this.DOMElements.attackButton.prop("disabled", false);
-			}, 1000);
+			if (this.currentEnemy) {
+				setTimeout(() => {
+					this.animateCounter();
+				}, 1000);
+			}
 		});
 		spell.animate({ opacity: "0" }, "normal");
 	},
@@ -50,12 +58,13 @@ game = {
 			this.currentCharacter.HP -= this.currentEnemy.attackPower;
 			this.showHealth();
 			spell.animate({ opacity: "0" }, "normal");
+			this.DOMElements.attackButton.prop("disabled", false);
 			this.fight();
 		});
 	},
 	fight() {
+		this.DOMElements.attackButton.prop("disabled", false);
 		this.showHealth();
-		this.DOMElements.characterWrapper.append(this.DOMElements.attackButton);
 		this.DOMElements.attackButton.one("click", () => {
 			this.DOMElements.attackButton.prop("disabled", true);
 			this.animateSpell();
@@ -85,21 +94,16 @@ game = {
 		}
 	},
 	pick() {
-		if ([0, 1, 2, 3].includes(this.pickNum)) {
-			let type = this.pickNum === 0 ? "Character" : "Enemy";
-			console.log(type);
-			$(".option").on("click", function() {
-				$(".option").off();
-				$(this).attr("class", `${type.toLowerCase()}Fighter fighter`);
-				game.select($(this), type);
-				game.pickNum++;
-				if (!game.currentEnemy) {
-					game.pick();
-				}
-			});
-		} else {
-			//winner?
-		}
+		let type = this.pickNum === 0 ? "Character" : "Enemy";
+		$(".option").on("click", function() {
+			$(".option").off();
+			$(this).attr("class", `${type.toLowerCase()}Fighter fighter`);
+			game.select($(this), type);
+			game.pickNum++;
+			if (!game.currentEnemy) {
+				game.pick();
+			}
+		});
 	}
 };
 
