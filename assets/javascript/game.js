@@ -20,20 +20,23 @@ game = {
 		{ name: "fighter4", HP: 40, attackPower: 4 }
 	],
 	reset() {
-		location.reload();
+		setTimeout(() => {
+			location.reload();
+		}, 1000);
 	},
 	lose() {
-		//	alert("loser");
+		alert("loser");
 		this.reset();
 	},
 	win() {
-		//	alert("winner");
+		alert("winner");
 		this.reset();
 	},
 	showHealth() {
 		if (this.currentCharacter.HP < 1) {
 			this.currentCharacter.HP = 0;
 			this.DOMElements.characterHealth.text("You Lose");
+
 			this.lose();
 		}
 		if (this.currentEnemy.HP < 1) {
@@ -74,6 +77,7 @@ game = {
 		});
 	},
 	fight() {
+		debugger;
 		this.DOMElements.attackButton.prop("disabled", false);
 		this.showHealth();
 		this.DOMElements.attackButton.one("click", () => {
@@ -82,12 +86,13 @@ game = {
 		});
 	},
 	select(divElement, type) {
+		debugger;
 		let wrapper = this.DOMElements[type.toLowerCase() + "Wrapper"];
 		wrapper.append(divElement);
 		this["current" + type] = this.fighters.find(
 			e => divElement.attr("id") === e.name
 		);
-		// this.fighters = this.fighters.filter(e => divElement.attr("id") !== e.name);
+		this.fighters = this.fighters.filter(e => divElement.attr("id") !== e.name);
 		this.fighters.forEach(e => {
 			if (e === divElement.attr("id")) {
 				this["current" + type] = e;
@@ -117,14 +122,12 @@ game = {
 			this.win();
 		}
 		$(".option").on("click", function() {
-			//debugger;
-			$(".characterOption").off();
+			$(".option").off();
 			$(this).attr("class", `${type.toLowerCase()}Fighter fighter`);
 			$(".characterOption").attr("class", "enemyOption option fighter");
 			game.select($(this), type);
 			if (!game.currentEnemy) {
 				game.pick();
-				debugger;
 			}
 		});
 	}
