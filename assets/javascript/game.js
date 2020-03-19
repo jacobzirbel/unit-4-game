@@ -81,11 +81,18 @@ game = {
 			this.animateSpell();
 		});
 	},
-	select(f, type) {
+	select(divElement, type) {
 		let wrapper = this.DOMElements[type.toLowerCase() + "Wrapper"];
-		wrapper.append(f);
-		this["current" + type] = this.fighters.find(e => f.attr("id") === e.name);
-		this.fighters = this.fighters.filter(e => f.attr("id") !== e.name);
+		wrapper.append(divElement);
+		this["current" + type] = this.fighters.find(
+			e => divElement.attr("id") === e.name
+		);
+		// this.fighters = this.fighters.filter(e => divElement.attr("id") !== e.name);
+		this.fighters.forEach(e => {
+			if (e === divElement.attr("id")) {
+				this["current" + type] = e;
+			}
+		});
 		if (type === "Character") {
 			this.currentCharacter.characterAttack = this.currentCharacter.attackPower;
 			this.currentCharacter.attack = function() {
@@ -110,11 +117,14 @@ game = {
 			this.win();
 		}
 		$(".option").on("click", function() {
-			$(".option").off();
+			//debugger;
+			$(".characterOption").off();
 			$(this).attr("class", `${type.toLowerCase()}Fighter fighter`);
+			$(".characterOption").attr("class", "enemyOption option fighter");
 			game.select($(this), type);
 			if (!game.currentEnemy) {
 				game.pick();
+				debugger;
 			}
 		});
 	}

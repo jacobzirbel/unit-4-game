@@ -6,8 +6,6 @@ body {
 	flex-flow: row nowrap;
 }
 .fighter {
-	height: 150px;
-	width: 150px;
 	border: 1px solid black;
 }
 .characterFighter {
@@ -43,4 +41,47 @@ button {
 	width: 30px;
 	background-color: green;
 	opacity: 0.25;
+}
+
+div.characterOption#fighter1,
+div.characterFighter#fighter1 {
+	background-image: url("../images/finnigan.png");
+	background-size: cover;
+}
+div.characterOption#fighter2,
+div.characterFighter#fighter2 {
+	background-image: url("../images/ron.jpg");
+}
+div.characterOption#fighter3,
+div.characterFighter#fighter3 {
+	background-image: url("../images/dumble.jpg");
+}
+div.characterOption#fighter4,
+div.characterFighter#fighter4 {
+	background-image: url("../images/snape.png");
+}
+div.enemyOption#fighter1,
+div.enemyFighter#fighter1 {
+	background-image: url("../images/QuirinusQuirrell.png");
+}
+div.enemyOption#fighter2,
+div.enemyFighter#fighter2 {
+	background-image: url("../images/bella.jpg");
+}
+div.enemyOption#fighter3,
+div.enemyFighter#fighter3 {
+	background-image: url("../images/voldy.jpg");
+}
+div.enemyOption#fighter4,
+div.enemyFighter#fighter4 {
+	background-image: url("../images/snape.png");
+}
+.enemyOption,
+.characterOption,
+.enemyFighter,
+.characterFighter {
+	margin: 10px;
+	height: 200px;
+	width: 200px;
+	background-size: contain;
 }
