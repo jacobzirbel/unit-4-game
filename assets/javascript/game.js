@@ -19,7 +19,6 @@ game = {
 		{ name: "fighter3", HP: 30, attackPower: 4 },
 		{ name: "fighter4", HP: 40, attackPower: 4 }
 	],
-	pickNum: 0,
 	reset() {
 		location.reload();
 	},
@@ -34,9 +33,7 @@ game = {
 	showHealth() {
 		if (this.currentCharacter.HP < 1) {
 			this.currentCharacter.HP = 0;
-
 			this.DOMElements.characterHealth.text("You Lose");
-
 			this.lose();
 		}
 		if (this.currentEnemy.HP < 1) {
@@ -108,7 +105,7 @@ game = {
 		}
 	},
 	pick() {
-		let type = this.pickNum === 0 ? "Character" : "Enemy";
+		let type = this.currentCharacter ? "Enemy" : "Character";
 		if (type === "Enemy" && this.fighters.length === 0) {
 			this.win();
 		}
@@ -116,7 +113,6 @@ game = {
 			$(".option").off();
 			$(this).attr("class", `${type.toLowerCase()}Fighter fighter`);
 			game.select($(this), type);
-			game.pickNum++;
 			if (!game.currentEnemy) {
 				game.pick();
 			}
