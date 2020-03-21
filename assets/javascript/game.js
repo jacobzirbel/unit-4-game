@@ -14,10 +14,10 @@ game = {
 	currentCharacter: "",
 	currentEnemy: "",
 	fighters: [
-		{ name: "fighter1", HP: 10, attackPower: 4 },
-		{ name: "fighter2", HP: 20, attackPower: 19 },
-		{ name: "fighter3", HP: 30, attackPower: 4 },
-		{ name: "fighter4", HP: 40, attackPower: 4 }
+		{ name: "fighter1", HP: 100, attackPower: 5 },
+		{ name: "fighter2", HP: 120, attackPower: 8 },
+		{ name: "fighter3", HP: 150, attackPower: 20 },
+		{ name: "fighter4", HP: 180, attackPower: 25 }
 	],
 	reset() {
 		setTimeout(() => {
@@ -77,7 +77,6 @@ game = {
 		});
 	},
 	fight() {
-		debugger;
 		this.DOMElements.attackButton.prop("disabled", false);
 		this.showHealth();
 		this.DOMElements.attackButton.one("click", () => {
@@ -86,7 +85,6 @@ game = {
 		});
 	},
 	select(divElement, type) {
-		debugger;
 		let wrapper = this.DOMElements[type.toLowerCase() + "Wrapper"];
 		wrapper.append(divElement);
 		this["current" + type] = this.fighters.find(
@@ -118,15 +116,15 @@ game = {
 	},
 	pick() {
 		let type = this.currentCharacter ? "Enemy" : "Character";
-		if (type === "Enemy" && this.fighters.length === 0) {
-			this.win();
-		}
 		$(".option").on("click", function() {
 			$(".option").off();
 			$(this).attr("class", `${type.toLowerCase()}Fighter fighter`);
 			$(".characterOption").attr("class", "enemyOption option fighter");
 			game.select($(this), type);
 			if (!game.currentEnemy) {
+				if (this.fighters.length === 0) {
+					game.win();
+				}
 				game.pick();
 			}
 		});
