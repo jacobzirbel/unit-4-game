@@ -128,15 +128,15 @@ game = {
 	},
 	pick() {
 		let type = this.currentCharacter ? "Enemy" : "Character";
+		if (game.fighters.length === 0) {
+			game.win();
+		}
 		$(".option").on("click", function() {
 			$(".option").off();
 			$(this).attr("class", `${type.toLowerCase()}Fighter fighter`);
 			$(".characterOption").attr("class", "enemyOption option fighter");
 			game.select($(this), type);
 			if (!game.currentEnemy) {
-				if (game.fighters.length === 0) {
-					game.win();
-				}
 				game.pick();
 			}
 		});
