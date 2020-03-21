@@ -53,6 +53,7 @@ game = {
 		let spell = $("<div>");
 		this.DOMElements[this.currentCharacter.name].append(spell);
 		spell.attr("id", "spell");
+		spell.css("background-color", "red");
 		spell.animate({ right: "100px", opacity: "1" }, "normal", () => {
 			this.currentEnemy.HP -= this.currentCharacter.attack();
 			this.showHealth();
@@ -68,6 +69,8 @@ game = {
 		let spell = $("<div>");
 		this.DOMElements[this.currentEnemy.name].append(spell);
 		spell.attr("id", "spell");
+		spell.css("background-color", "green");
+
 		spell.animate({ left: "100px", opacity: "1" }, "normal", () => {
 			this.currentCharacter.HP -= this.currentEnemy.attackPower;
 			this.showHealth();
@@ -122,7 +125,7 @@ game = {
 			$(".characterOption").attr("class", "enemyOption option fighter");
 			game.select($(this), type);
 			if (!game.currentEnemy) {
-				if (this.fighters.length === 0) {
+				if (game.fighters.length === 0) {
 					game.win();
 				}
 				game.pick();
