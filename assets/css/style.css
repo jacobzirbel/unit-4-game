@@ -1,6 +1,7 @@
 body {
 	width: 100%;
 }
+
 .fighters {
 	display: flex;
 	flex-flow: row nowrap;
@@ -30,7 +31,7 @@ body {
 	flex-direction: column;
 	justify-content: space-around;
 }
-#attackButton {
+button {
 	height: 80px;
 	width: 90px;
 	margin-left: 60px;
@@ -94,5 +95,7 @@ div.enemyFighter#fighter4 {
 }
 
 .endMessage {
-	font-size: ;
+	font-size: 60px;
+	color: black;
+	margin: 30px;
 }

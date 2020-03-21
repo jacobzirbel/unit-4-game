@@ -10,7 +10,10 @@ game = {
 		fighter4: $("#fighter4"),
 		characterHealth: $("<p>").attr("id", "characterHealth"),
 		enemyHealth: $("<p>").attr("id", "enemyHealth"),
-		attackButton: $("#attackButton")
+		attackButton: $("#attackButton"),
+		resetButton: $("<button>")
+			.attr("id", "resetButton")
+			.text("reset")
 	},
 	currentCharacter: "",
 	currentEnemy: "",
@@ -31,11 +34,13 @@ game = {
 	},
 	win() {
 		setTimeout(() => {
-			this.DOMElements.container.empty().appendChild(
+			this.DOMElements.container.empty();
+			this.DOMElements.container.append(
 				$("<p>")
 					.attr("class", "endMessage")
-					.text("done")
+					.text("YOU WIN")
 			);
+			this.DOMElements.container.append(this.DOMElements.resetButton);
 		}, 1000);
 		console.log("win");
 		//I	this.reset();
