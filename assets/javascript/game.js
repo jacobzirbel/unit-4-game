@@ -13,44 +13,36 @@ game = {
 		attackButton: $("#attackButton"),
 		resetButton: $("<button>")
 			.attr("id", "resetButton")
-			.text("reset")
+			.text("play again")
 	},
 	currentCharacter: "",
 	currentEnemy: "",
 	fighters: [
-		{ name: "fighter1", HP: 100, attackPower: 50 },
-		{ name: "fighter2", HP: 120, attackPower: 8 },
-		{ name: "fighter3", HP: 150, attackPower: 20 },
-		{ name: "fighter4", HP: 180, attackPower: 25 }
+		{ name: "fighter1", HP: 100, attackPower: 15 },
+		{ name: "fighter2", HP: 110, attackPower: 18 },
+		{ name: "fighter3", HP: 120, attackPower: 20 },
+		{ name: "fighter4", HP: 130, attackPower: 22 }
 	],
 	reset() {
-		setTimeout(() => {
-			location.reload();
-		}, 1000);
+		location.reload();
 	},
-	lose() {
-		alert("loser");
-		this.reset();
-	},
-	win() {
+	end(outcome) {
 		setTimeout(() => {
 			this.DOMElements.container.empty();
 			this.DOMElements.container.append(
 				$("<p>")
 					.attr("class", "endMessage")
-					.text("YOU WIN")
+					.text("YOU " + outcome.toUpperCase())
 			);
 			this.DOMElements.container.append(this.DOMElements.resetButton);
 		}, 1000);
-		console.log("win");
-		//I	this.reset();
+		this.DOMElements.resetButton.click(() => game.reset());
 	},
 	showHealth() {
 		if (this.currentCharacter.HP < 1) {
 			this.currentCharacter.HP = 0;
 			this.DOMElements.characterHealth.text("You Lose");
-
-			this.lose();
+			this.end("LOSE");
 		}
 		if (this.currentEnemy.HP < 1) {
 			this.currentEnemy.HP = 0;
@@ -142,7 +134,7 @@ game = {
 	pick() {
 		let type = this.currentCharacter ? "Enemy" : "Character";
 		if (game.fighters.length === 0) {
-			game.win();
+			game.end("WIN");
 		}
 		$(".option").on("click", function() {
 			$(".option").off();
