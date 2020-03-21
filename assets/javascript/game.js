@@ -1,5 +1,6 @@
 game = {
 	DOMElements: {
+		container: $(".container"),
 		characterWrapper: $(".characterWrapper"),
 		enemyWrapper: $(".enemyWrapper"),
 		fighters: $(".fighters"),
@@ -14,7 +15,7 @@ game = {
 	currentCharacter: "",
 	currentEnemy: "",
 	fighters: [
-		{ name: "fighter1", HP: 100, attackPower: 5 },
+		{ name: "fighter1", HP: 100, attackPower: 50 },
 		{ name: "fighter2", HP: 120, attackPower: 8 },
 		{ name: "fighter3", HP: 150, attackPower: 20 },
 		{ name: "fighter4", HP: 180, attackPower: 25 }
@@ -29,8 +30,15 @@ game = {
 		this.reset();
 	},
 	win() {
-		alert("winner");
-		this.reset();
+		setTimeout(() => {
+			this.DOMElements.container.empty().appendChild(
+				$("<p>")
+					.attr("class", "endMessage")
+					.text("done")
+			);
+		}, 1000);
+		console.log("win");
+		//I	this.reset();
 	},
 	showHealth() {
 		if (this.currentCharacter.HP < 1) {

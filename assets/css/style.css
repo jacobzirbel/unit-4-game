@@ -30,13 +30,14 @@ body {
 	flex-direction: column;
 	justify-content: space-around;
 }
-button {
-	height: 40px;
-	width: 50px;
+#attackButton {
+	height: 80px;
+	width: 90px;
+	margin-left: 60px;
 }
 #spell {
 	position: absolute;
-	top: 70px;
+	top: 150px;
 	height: 10px;
 	width: 40px;
 	background-color: red;
@@ -90,4 +91,8 @@ div.enemyFighter#fighter4 {
 	color: red;
 	font-size: 30px;
 	margin: 10px;
+}
+
+.endMessage {
+	font-size: ;
 }
