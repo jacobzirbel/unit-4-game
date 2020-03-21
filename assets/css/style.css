@@ -37,9 +37,9 @@ button {
 #spell {
 	position: absolute;
 	top: 70px;
-	height: 30px;
-	width: 30px;
-	background-color: green;
+	height: 10px;
+	width: 40px;
+	background-color: red;
 	opacity: 0.25;
 }
 
@@ -84,4 +84,10 @@ div.enemyFighter#fighter4 {
 	height: 200px;
 	width: 200px;
 	background-size: contain;
+}
+#characterHealth,
+#enemyHealth {
+	color: red;
+	font-size: 30px;
+	margin: 10px;
 }

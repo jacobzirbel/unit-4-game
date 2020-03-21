@@ -46,8 +46,14 @@ game = {
 			this.currentEnemy = "";
 			this.pick();
 		}
-		this.DOMElements.characterHealth.text(this.currentCharacter.HP);
-		this.DOMElements.enemyHealth.text(this.currentEnemy.HP);
+		this.DOMElements.characterHealth.text(
+			"Health: " + this.currentCharacter.HP
+		);
+		if (this.currentEnemy.HP === undefined) {
+			this.DOMElements.enemyHealth.text("Pick Next Enemy");
+		} else {
+			this.DOMElements.enemyHealth.text("Health: " + this.currentEnemy.HP);
+		}
 	},
 	animateSpell() {
 		let spell = $("<div>");
@@ -106,15 +112,18 @@ game = {
 				this.characterAttack += this.attackPower;
 				return ret;
 			};
-		}
-		this.DOMElements.characterWrapper.append(
-			this.DOMElements.characterHealth.text(this.currentCharacter.HP)
-		);
-		this.DOMElements.enemyWrapper.append(
-			this.DOMElements.enemyHealth.text(this.currentEnemy.HP)
-		);
-		if (this.currentEnemy) {
+			this.DOMElements.characterWrapper.append(
+				this.DOMElements.characterHealth.text(
+					"Health:" + this.currentCharacter.HP
+				)
+			);
+		} else {
+			this.DOMElements.enemyWrapper.append(
+				this.DOMElements.enemyHealth.text("Health: " + this.currentEnemy.HP)
+			);
+			// if (this.currentEnemy) {
 			this.fight();
+			// }
 		}
 	},
 	pick() {
