@@ -99,3 +99,8 @@ div.enemyFighter#fighter4 {
 	color: black;
 	margin: 30px;
 }
+#pickText {
+	color: black;
+	font-size: 30px;
+	margin: 10px;
+}

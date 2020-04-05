@@ -10,10 +10,9 @@ game = {
 		fighter4: $("#fighter4"),
 		characterHealth: $("<p>").attr("id", "characterHealth"),
 		enemyHealth: $("<p>").attr("id", "enemyHealth"),
-		attackButton: $("#attackButton"),
-		resetButton: $("<button>")
-			.attr("id", "resetButton")
-			.text("play again")
+		attackButton: $("<button>").attr("id", "attackButton").text("Attack"),
+		resetButton: $("<button>").attr("id", "resetButton").text("play again"),
+		pickText: $("<p>").attr("id", "pickText"),
 	},
 	currentCharacter: "",
 	currentEnemy: "",
@@ -21,7 +20,7 @@ game = {
 		{ name: "fighter1", HP: 100, attackPower: 15 },
 		{ name: "fighter2", HP: 110, attackPower: 18 },
 		{ name: "fighter3", HP: 120, attackPower: 20 },
-		{ name: "fighter4", HP: 130, attackPower: 22 }
+		{ name: "fighter4", HP: 130, attackPower: 22 },
 	],
 	reset() {
 		location.reload();
@@ -91,6 +90,8 @@ game = {
 		});
 	},
 	fight() {
+		this.DOMElements.characterWrapper.append(this.DOMElements.attackButton);
+
 		this.DOMElements.attackButton.prop("disabled", false);
 		this.showHealth();
 		this.DOMElements.attackButton.one("click", () => {
@@ -102,17 +103,19 @@ game = {
 		let wrapper = this.DOMElements[type.toLowerCase() + "Wrapper"];
 		wrapper.append(divElement);
 		this["current" + type] = this.fighters.find(
-			e => divElement.attr("id") === e.name
+			(e) => divElement.attr("id") === e.name
 		);
-		this.fighters = this.fighters.filter(e => divElement.attr("id") !== e.name);
-		this.fighters.forEach(e => {
+		this.fighters = this.fighters.filter(
+			(e) => divElement.attr("id") !== e.name
+		);
+		this.fighters.forEach((e) => {
 			if (e === divElement.attr("id")) {
 				this["current" + type] = e;
 			}
 		});
 		if (type === "Character") {
 			this.currentCharacter.characterAttack = this.currentCharacter.attackPower;
-			this.currentCharacter.attack = function() {
+			this.currentCharacter.attack = function () {
 				let ret = this.characterAttack;
 				this.characterAttack += this.attackPower;
 				return ret;
@@ -133,10 +136,15 @@ game = {
 	},
 	pick() {
 		let type = this.currentCharacter ? "Enemy" : "Character";
+		if (type === "Character")
+			this.DOMElements.pickText.text("Pick Your " + type);
+		this.DOMElements.characterWrapper.append(this.DOMElements.pickText);
+
 		if (game.fighters.length === 0) {
 			game.end("WIN");
 		}
-		$(".option").on("click", function() {
+		$(".option").on("click", function () {
+			game.DOMElements.pickText.text("");
 			$(".option").off();
 			$(this).attr("class", `${type.toLowerCase()}Fighter fighter`);
 			$(".characterOption").attr("class", "enemyOption option fighter");
@@ -145,7 +153,7 @@ game = {
 				game.pick();
 			}
 		});
-	}
+	},
 };
 
 $(document).ready(() => {
